@@ -38,6 +38,10 @@
           </div>
         </div>
       </div>
+      <p class="text-center mt-2">
+        or
+        <router-link to="/register">register</router-link>
+      </p>
     </form>
   </div>
 </template>
