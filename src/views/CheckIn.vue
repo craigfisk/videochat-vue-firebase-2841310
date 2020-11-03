@@ -58,7 +58,6 @@ export default {
         this.displayName = user.displayName
       }
     })
-
     //Get the Room Name
     db.collection('users')
       .doc(this.$route.params.hostID)
