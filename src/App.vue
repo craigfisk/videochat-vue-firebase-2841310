@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Navigation :user="user" @logout="logout" />
-    <router-view :user="user" @logout="logout" />
+    <router-view :user="user" @logout="logout" @addRoom="addRoom" />
   </div>
 </template>
 <script>
@@ -21,7 +21,16 @@ export default {
         .signOut()
         .then(() => {
           this.user = null
-          this.$routher.push('login')
+          this.$router.push('login')
+        })
+    },
+    addRoom: function(payload) {
+      db.collection('users')
+        .doc(this.user.uid)
+        .collection('rooms')
+        .add({
+          name: payload,
+          createdAt: Firebase.firestore.FieldValue.serverTimestamp()
         })
     }
   },
@@ -31,13 +40,6 @@ export default {
         this.user = user
       }
     })
-    // db.collection('users')
-    //   .doc('gV7beTpo7Pp6BembK5te')
-    //   .get()
-    //   .then(snapshot => {
-    //     this.user = snapshot.data().name
-    //     this.toothpaste = snapshot.data().toothpaste
-    //   })
   },
   components: {
     Navigation
