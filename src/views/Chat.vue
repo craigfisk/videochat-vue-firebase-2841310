@@ -2,7 +2,7 @@
   <div class="container-fluid mt-4">
     <div class="mb-3">
       <span class="mb-0 h2 text-primary">{{ roomName }}</span>
-      <span class="ml-1">
+      <span class="ml-1" v-if="user && user.uid !== hostID">
         Hosted by: <strong class="text-danger">{{ hostDisplayName }}</strong>
       </span>
     </div>
@@ -24,6 +24,7 @@
               class="mr-2"
               title="Approve attendee"
               @click="toggleApproval(attendee.id)"
+              v-if="user && user.uid == hostID"
             >
               <font-awesome-icon icon="user"></font-awesome-icon>
             </a>
@@ -31,8 +32,11 @@
             <span class="mr-2" title="On Air">
               <font-awesome-icon icon="podcast"></font-awesome-icon>
             </span>
-            <span></span>
-            <span class="pl-1">{{ attendee.displayName }}</span>
+            <span
+              class="pl-1"
+              :class="[attendee.id == user.uid ? 'font-weight-bold text-danger' : '']"
+              >{{ attendee.displayName }}</span
+            >
           </li>
         </ul>
         <div>
